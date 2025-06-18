@@ -24,12 +24,6 @@
       <wd-tabs :customClass="getClass()" v-model="tabActive">
         <template v-for="(item, index) in tabList" :key="index">
           <wd-tab :title="item.title" :name="item.key">
-            <view class="flow" @click="handleGo">
-              <view class="content">
-                <view class="cuIcon-roundcheck"></view>
-                <view class="text">流程待办</view>
-              </view>
-            </view>
             <view class="mainContent">
               <chatList v-if="item.key === '1'"></chatList>
               <addressBookList v-if="item.key === '2'"></addressBookList>

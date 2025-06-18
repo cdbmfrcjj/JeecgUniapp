@@ -107,7 +107,7 @@ const router = useRouter()
 const paging = ref(null)
 const dataList = ref([])
 const starFlag = ref('')
-const conditionFilter = reactive({ show: true })
+const conditionFilter = reactive({ show: false })
 const backRouteName = ref('index')
 const routeMethod = ref('pushTab')
 // 开始时间结束时间

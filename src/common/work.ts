@@ -18,14 +18,6 @@ export const us = {
       enabled: true,
     },
     {
-      title: '表单设计器',
-      icon: icon_prefix + 'chuchai.png',
-      description: '表单设计器',
-      useCount: 10000,
-      routeIndex: 'desformList',
-      enabled: true,
-    },
-    {
       title: '仪表盘',
       icon: icon_prefix + 'chart.png',
       description: '仪表盘',

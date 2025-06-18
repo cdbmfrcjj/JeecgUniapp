@@ -28,18 +28,6 @@
       </swiper-item>
     </swiper>
     <scroll-view class="scrollView" :scroll-y="true" scroll-with-animation>
-      <!--流程服务-->
-      <wd-row>
-        <wd-col :span="12" v-for="(item, index) in middleApps" :key="index">
-          <view class="box" @click="goTo(item.routeIndex)">
-            <wd-img :width="50" :height="50" :src="getFileAccessHttpUrl(item.icon)"></wd-img>
-            <view class="textBox">
-              <wd-text :text="item.title"></wd-text>
-              <wd-text :text="item.subTitle"></wd-text>
-            </view>
-          </view>
-        </wd-col>
-      </wd-row>
       <!--常用服务-->
       <view class="serveBox">
         <view class="title">
@@ -240,20 +228,7 @@ if (isLocalConfig) {
     routeIndex: 'other',
     itemKey: 'other',
   })
-  middleApps.value = [
-    {
-      icon: 'https://static.jeecg.com/upload/test/line2_icon1_1595818065964.png',
-      title: '审批',
-      subTitle: '个人审批',
-      routeIndex: 'paper',
-    },
-    {
-      icon: 'https://static.jeecg.com/upload/test/line2_icon2_1595818070168.png',
-      title: '审批稿',
-      subTitle: '审批草稿箱',
-      routeIndex: 'draft',
-    },
-  ]
+
   swiperList.value = [
     {
       id: 1,

@@ -211,7 +211,16 @@ function createEnvConfigPlugin() {
       const indexPath = path.join(outputDir, 'index.html')
       if (fs.existsSync(indexPath)) {
         let html = fs.readFileSync(indexPath, 'utf-8')
-        const scriptTag = '<script src="./app.config.js"></script>'
+        // update-begin-author:liaozhiyang date:2025-05-27 for:【issues/87】h5打包部署后,Oauth2认证后无法正确引入app.config.js文件
+        let prefix = '/'
+        if (env.VITE_APP_PUBLIC_BASE) {
+          prefix = env.VITE_APP_PUBLIC_BASE
+        }
+        if (prefix.endsWith('/')) {
+          prefix = prefix.slice(0, -1)
+        }
+        const scriptTag = `<script src="${prefix}/app.config.js"></script>`
+        // update-end-author:liaozhiyang date:2025-05-27 for:【issues/87】h5打包部署后,Oauth2认证后无法正确引入app.config.js文件
         if (!html.includes('app.config.js')) {
           html = html.replace('</title>', `</title> \n ${scriptTag}`)
           fs.writeFileSync(indexPath, html, 'utf-8')

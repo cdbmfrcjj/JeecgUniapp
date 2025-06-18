@@ -21,7 +21,7 @@
         </template>
         <template v-if="isMp" #left>
           <!-- 为了在小程序上美观 -->
-          <template v-if="$slots.navRight">
+          <template v-if="$slots.navRight && isShowNavRightTextMp">
             <view class="btnGroup">
               <view class="left" @click.stop="handleClickLeft">{{ navLeftText }}</view>
               <view class="right" @click.stop="() => emit('navRightMp')">{{ navRightTextMp }}</view>
@@ -57,6 +57,7 @@ import { useSlots } from 'vue'
 import { useRouter } from '@/plugin/uni-mini-router'
 import { useParamsStore } from '@/store/page-params'
 import { isMp } from '@/utils/platform'
+// const isMp = true
 defineOptions({
   name: 'pageLayout',
   options: {
@@ -119,6 +120,11 @@ const props = defineProps({
   navRightText: {
     typeof: String,
     default: '',
+  },
+  // 当有右侧有slot时，在小程序上不显示slot，显示文字 (默认显示)
+  isShowNavRightTextMp: {
+    typeof: Boolean,
+    default: true,
   },
   // 当有右侧有slot时，在小程序上不显示slot，显示文字
   navRightTextMp: {

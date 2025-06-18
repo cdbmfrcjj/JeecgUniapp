@@ -89,24 +89,114 @@ const bottomOperatePopup = reactive({
 })
 
 const queryList = () => {
-  http
-    .get('/eoa/im/newApi/getChatList')
-    .then((res: any) => {
-      if (res.success) {
-        paging.value.complete(res.result.logVoList)
-        nextTick(() => {
-          setTimeout(() => {
-            sortByIzTop(dataList.value)
-            dataList.value = [...dataList.value]
-          }, 10)
-        })
-      } else {
-        paging.value.complete(false)
-      }
-    })
-    .catch((res) => {
-      paging.value.complete(false)
-    })
+  const data = [
+    {
+      id: 1,
+      fromUserName: '廖秀兰',
+      sendTime: '2018-12-08',
+      type: 'discussion',
+      izTop: 0,
+      status: 'offline',
+      msgFrom: 4000,
+      msgTo: 100,
+      fromAvatar: 'https://random.imagecdn.app/100/100',
+    },
+    {
+      id: 2,
+      fromUserName: '廖强',
+      sendTime: '2018-12-08',
+      type: 'discussion',
+      izTop: 1,
+      status: 'online',
+      msgFrom: 4012,
+      msgTo: 134,
+      fromAvatar: 'https://q1.qlogo.cn/g?b=qq&nk=190848757&s=100',
+    },
+    {
+      id: 3,
+      fromUserName: '许强',
+      sendTime: '2018-12-08',
+      type: 'group',
+      izTop: 0,
+      status: 'online',
+      msgFrom: 4024,
+      msgTo: 168,
+      fromAvatar: 'https://dummyimage.com/100x100/f37b1d/fff&text=%E7%8E%8B%E4%BA%94',
+    },
+    {
+      id: 4,
+      fromUserName: '孙静',
+      sendTime: '2018-12-08',
+      type: 'friend',
+      izTop: 1,
+      status: 'online',
+      msgFrom: 4036,
+      msgTo: 202,
+      fromAvatar: 'https://random.imagecdn.app/100/100',
+    },
+    {
+      id: 5,
+      fromUserName: '白艳',
+      sendTime: '2018-12-08',
+      type: 'discussion',
+      izTop: 0,
+      status: 'offline',
+      msgFrom: 4048,
+      msgTo: 236,
+      fromAvatar: 'https://picsum.photos/100/100',
+    },
+    {
+      id: 6,
+      fromUserName: '尹芳',
+      sendTime: '2018-12-08',
+      type: 'discussion',
+      izTop: 0,
+      status: 'offline',
+      msgFrom: 4060,
+      msgTo: 270,
+      fromAvatar: 'https://q1.qlogo.cn/g?b=qq&nk=190848757&s=100',
+    },
+    {
+      id: 7,
+      fromUserName: '侯娜',
+      sendTime: '2018-12-08',
+      type: 'group',
+      izTop: 0,
+      status: 'offline',
+      msgFrom: 4072,
+      msgTo: 304,
+      fromAvatar: 'https://q1.qlogo.cn/g?b=qq&nk=190848757&s=100',
+    },
+    {
+      id: 8,
+      fromUserName: '邹涛',
+      sendTime: '2018-12-08',
+      type: 'group',
+      izTop: 0,
+      status: 'offline',
+      msgFrom: 4084,
+      msgTo: 338,
+      fromAvatar: 'https://dummyimage.com/100x100/59c7b8/fff&text=%E5%85%AD%E5%AD%90',
+    },
+    {
+      id: 9,
+      fromUserName: '吴洋',
+      sendTime: '2018-12-08',
+      type: 'discussion',
+      izTop: 0,
+      status: 'offline',
+      msgFrom: 4096,
+      msgTo: 372,
+      fromAvatar: 'https://random.imagecdn.app/100/100',
+    },
+  ]
+  paging.value.complete(data)
+  nextTick(() => {
+    setTimeout(() => {
+      sortByIzTop(dataList.value)
+      dataList.value = [...dataList.value]
+    }, 10)
+  })
 }
 const sortByIzTop = (arr) => {
   return arr.sort((a, b) => {
@@ -200,8 +290,8 @@ const handleGo = (item) => {
   }
 }
 const onSocketOpen = () => {
-  console.log('启动webSocket')
-  socket.init('eoaNewChatSocket')
+  // console.log('启动webSocket')
+  // socket.init('eoaNewChatSocket')
 }
 const onSocketReceive = () => {
   socket.acceptMessage = function (res) {
@@ -245,7 +335,7 @@ onShow(() => {
   onSocketReceive()
 })
 onHide(() => {
-  socket?.closeSocket()
+  // socket?.closeSocket()
 })
 onMounted(() => {
   uni.$on('chatList:unreadClear', (chatItemData) => {

@@ -30,17 +30,10 @@
           </view>
         </template>
         <template #bottom>
-          <chat-input-bar ref="inputBar" @send="doSend" @image="handleImage" />
+          <chat-input-bar ref="inputBar" @send="doSend" />
         </template>
       </z-paging>
     </view>
-    <template #navRight>
-      <view
-        v-if="['group', 'discussion'].includes(chatObj.type)"
-        class="cuIcon-friend font-size-16px color-white"
-        @click="handleGoChatSetting"
-      ></view>
-    </template>
   </PageLayout>
 </template>
 
@@ -143,8 +136,8 @@ const creatFriendSession = (userId) => {
   })
 }
 const onSocketOpen = () => {
-  console.log('启动webSocket')
-  socket.init('eoaNewChatSocket')
+  // console.log('启动webSocket')
+  // socket.init('eoaNewChatSocket')
 }
 const onSocketReceive = () => {
   var _this = this
@@ -219,23 +212,134 @@ const queryList = (pageNo, pageSize) => {
     // sort: 'DESC',
   }
   console.log('params', params)
-  http
-    .get(api.chatlog, params)
-    .then((res: any) => {
-      if (res.success && res.result?.records) {
-        const records = analysis(res.result.records)
-        paging.value.complete(records)
-        if (isFirstLoad) {
-          uni.$emit('chatList:unreadClear', chatItemData)
-          unreadClear()
-        }
-      } else {
-        paging.value.complete(false)
-      }
-    })
-    .catch((res) => {
-      paging.value.complete(false)
-    })
+  const data = [
+    {
+      id: 1,
+      fromUserName: '顾平',
+      sendTime: '1977-11-13',
+      fromAvatar: 'https://dummyimage.com/100x100/000/fff&text=%E6%9D%8E%E5%9B%9B',
+      type: 'friend',
+      izTop: 1,
+      status: 'offline',
+      msgFrom: 4000,
+      msgTo: 100,
+      userId: '1678948772039729154',
+      msgType: 'text',
+      msgData:
+        '可半达办外将物起算置知空子。上题务点条界思清法导集马为和计。始在形计各强可求开去手先下识极级育专。形子民委想己给号全维精道应。斯适般不拉个世被资提达须之多关。己除约确元则次同风平维音毛听。少验且内果论治量军们活展观情面元越。',
+    },
+    {
+      id: 2,
+      fromUserName: '熊艳',
+      sendTime: '1977-11-13',
+      fromAvatar: 'https://dummyimage.com/100x100/000/fff&text=%E6%9D%8E%E5%9B%9B',
+      type: 'friend',
+      izTop: 0,
+      status: 'online',
+      msgFrom: 4012,
+      msgTo: 134,
+      userId: '1678948772039729154',
+      msgType: 'text',
+      msgData:
+        '斗取写也展需会于儿次只三自到界民品因。只代装细打三管规这前千器她她入音即准。必象和长使南资几时明因米多交极须空。',
+    },
+    {
+      id: 3,
+      fromUserName: '康娜',
+      sendTime: '1977-11-13',
+      fromAvatar: 'https://dummyimage.com/100x100/000/fff&text=%E6%9D%8E%E5%9B%9B',
+      type: 'discussion',
+      izTop: 1,
+      status: 'offline',
+      msgFrom: 4024,
+      msgTo: 168,
+      userId: '1678948772039729154',
+      msgType: 'text',
+      msgData:
+        '图步把单增利老何列力道何认象。子各交群容产识一界边先式声。被思务共是圆音少际指王元压没任内共。养作包京何铁历属信战族再线理却来情料。能周内家术向建满思书温音太装。时她切调它论族温中三关且与志千。',
+    },
+    {
+      id: 4,
+      fromUserName: '石平',
+      sendTime: '1977-11-13',
+      fromAvatar: 'https://dummyimage.com/100x100/000/fff&text=%E6%9D%8E%E5%9B%9B',
+      type: 'group',
+      izTop: 1,
+      status: 'offline',
+      msgFrom: 4036,
+      msgTo: 202,
+      userId: '1678948772039729154',
+      msgType: 'text',
+      msgData:
+        '民高价般直素划达期矿身更价律或支今。争局便工争相算则参调信斯。把清得完别青院阶火老先位包回速变。意温太合为这来物只我非象专型又加军。至取拉方毛眼例着大你这每相亲该元风。',
+    },
+    {
+      id: 5,
+      fromUserName: '马杰',
+      sendTime: '1977-11-13',
+      fromAvatar: 'https://dummyimage.com/100x100/000/fff&text=%E6%9D%8E%E5%9B%9B',
+      type: 'group',
+      izTop: 1,
+      status: 'offline',
+      msgFrom: 4048,
+      msgTo: 236,
+      userId: '1678948772039729154',
+      msgType: 'text',
+      msgData:
+        '除命市与命成型两口接在及民志提能。需参处空容感学长革段易给分。始真结红型图处技界党非青机山。广直声从老照如写中么省风但。论斗展就积信区北形大报达据把青要。',
+    },
+    {
+      id: 6,
+      fromUserName: '沈艳',
+      sendTime: '1977-11-13',
+      fromAvatar: 'https://dummyimage.com/100x100/000/fff&text=%E6%9D%8E%E5%9B%9B',
+      type: 'friend',
+      izTop: 0,
+      status: 'offline',
+      msgFrom: 4060,
+      msgTo: 270,
+      userId: '1678948772039729154',
+      msgType: 'text',
+      msgData:
+        '规响用其江众器老也成等听节电西。系石教建还厂文气要际长中电今。情素他头资风矿象非这经格老包问过。史期带之走北形历值从所因断八技。红行没众说共史张在任千物今老。传队命做打此无直转术直其门公。',
+    },
+    {
+      id: 7,
+      fromUserName: '崔芳',
+      sendTime: '1977-11-13',
+      fromAvatar: 'https://dummyimage.com/100x100/000/fff&text=%E6%9D%8E%E5%9B%9B',
+      type: 'discussion',
+      izTop: 0,
+      status: 'online',
+      msgFrom: 4072,
+      msgTo: 304,
+      userId: '1678948772039729154',
+      msgType: 'text',
+      msgData:
+        '识保住并非先严间眼马级点叫识只管。写信为每下数集被料前号变很整合。收业后局看并太能决来二府展建片活即体。给史求音很三动作目重因质除提。法关活量管集求公又再时共小明个自确。集提支很也规入并我基照计最要飞院面。',
+    },
+    {
+      id: 8,
+      fromUserName: '郝超',
+      sendTime: '1977-11-13',
+      fromAvatar: 'https://dummyimage.com/100x100/000/fff&text=%E6%9D%8E%E5%9B%9B',
+      type: 'discussion',
+      izTop: 1,
+      status: 'online',
+      msgFrom: 4084,
+      msgTo: 338,
+      userId: '1678948772039729154',
+      msgType: 'text',
+      msgData:
+        '状断只派器新以真业强说部多确料。始矿认要联清才权况况法色式。引办研角且百国路里还计走中细位。或温作经人周复技常位交文共没运。',
+    },
+  ]
+  const records = analysis(data)
+  paging.value.complete(records)
+  if (isFirstLoad) {
+    uni.$emit('chatList:unreadClear', chatItemData)
+    unreadClear()
+  }
 }
 const analysis = (data) => {
   let arr = data
@@ -280,19 +384,7 @@ const handleReplyMsg = (item, list) => {
   item.replyContent = replyContent
   return item
 }
-const unreadClear = () => {
-  http
-    .post('/eoa/im/newApi/unreadClear', {
-      type: chatObj.value.type,
-      msgTo: chatObj.value.msgTo,
-      msgFrom: chatObj.value.msgFrom,
-    })
-    .then((res: any) => {
-      if (res.success) {
-        // _this.eventChannel.emit('toPrePageData', { data: 'data from chat page' })
-      }
-    })
-}
+const unreadClear = () => {}
 // 播放语音
 const handlePlayVoice = (item) => {
   if (item.id == playMsgid.value) {
@@ -361,12 +453,12 @@ const sendMsg = (content, type) => {
     text: content,
     msgType: 'text',
   }
-  http.post(api.sendMsg, params).then((res: any) => {
-    console.log('消息发送结果：', res)
-    if (!res.success) {
-      toast.error(res.message)
-    }
-  })
+  // http.post(api.sendMsg, params).then((res: any) => {
+  //   console.log('消息发送结果：', res)
+  //   if (!res.success) {
+  //     toast.error(res.message)
+  //   }
+  // })
 }
 
 const handleImage = (type) => {
@@ -443,7 +535,7 @@ onMounted(() => {
   })
 })
 onBeforeUnmount(() => {
-  socket?.closeSocket()
+  // socket?.closeSocket()
   uni.$off('chat:updateTile')
 })
 </script>
